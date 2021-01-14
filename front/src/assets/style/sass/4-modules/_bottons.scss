@@ -1,0 +1,42 @@
+.btn {
+    font-weight: 500;
+}
+
+.btn--icon {
+    display: inline-flex;
+    flex-direction: row;
+    white-space: nowrap;
+    & .icon {
+        display: flex;
+        margin-right: 10px;
+        white-space: nowrap;
+    }
+}
+
+.btn--round {
+    border-radius: 30px;
+}
+
+.btn-sm {
+    padding: 10px 12px;
+    line-height: 16px;
+} 
+
+.btn-white {
+    background-color: $secondary-btn-color;
+    color: $primary-color;
+    transition-duration: 200ms;
+    &:hover, &:active, &:focus {
+        background-color: $secondary-btn-color--hover;
+        color: $primary-color;
+    }
+}
+
+.btn-black {
+    background-color: $primary-btn-color;
+    color: $secondary-color;
+    transition-duration: 200ms;
+    &:hover {
+        background-color: $primary-btn-color--hover;
+    } 
+}
