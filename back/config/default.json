@@ -1,3 +1,7 @@
 {
-    "bcryptSalt": "3cwIoyH2nHA6HFkgNA3R"
+    "dbConfig": {
+        "host": "localhost",
+        "port": 27017,
+        "dbName": "uber-clone"
+    }
 }
