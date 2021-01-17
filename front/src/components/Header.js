@@ -8,7 +8,7 @@ const Header = () => {
             <div className="header-content">
                 <h1 className="heading-1 header-heading">Always the ride you want</h1>
                 <p className="paragraph paragraph--mr-b">Request a ride, hop in, and relax.</p>
-                <Link className="btn-black btn--rect-m" to="/">Sign up to ride</Link>
+                <Link to="/signup" className="btn-black btn--rect-m">Sign up to ride</Link>
             </div>
             <div>
                 <img src={Header_img} alt="Two girls waiting for a cab."/>
