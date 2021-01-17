@@ -39,7 +39,7 @@ module.exports = {
             return res.status(200).json({ msg: ['Your account is successfully saved!']})
 
         } catch(error) {
-            res.status(500).json({ errors: ['A server error has accured, Please try again later.']})
+            return res.status(500).json({ errors: ['A server error has accured, Please try again later.']})
         }
     }
 }
