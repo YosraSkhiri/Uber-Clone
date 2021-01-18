@@ -3,5 +3,7 @@
         "host": "localhost",
         "port": 27017,
         "dbName": "uber-clone"
-    }
+    },
+
+    "jwtPrivateKey": "wBi6u4cXBF0UgG02crUB"
 }
