@@ -8,7 +8,7 @@ validateUserLogin = (LoginData) => {
     let validationErrors = [];
 
     if(!email) {
-        validationErrors.push('Email is required.');
+        validationErrors.push('Email is required');
     } else {
         const regularExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         
