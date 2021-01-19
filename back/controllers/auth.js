@@ -70,7 +70,7 @@ module.exports = {
             if(passwordCompareResult){
                 const token = await jwt.sign({ userId }, config.get('jwtPrivateKey'));
                 return res.status(200)
-                          .cookie('loginToken', token, { httpOnly: true })
+                          .cookie('loginToken', token, { httpOnly: true, secure: true })
                           .json({ msg: ['Logged in successfully.'] });  
             }
 
