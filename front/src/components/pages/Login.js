@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import apiConsumer from '../../api';
 import Navbar from '../Navbar';
 
-const Login = (props) => {
+const Login = () => {
     const { accountType } = useParams();
     const [loginInput, setLoginInpput] = useState({
         email: '',
         password: '',
-        role: accountType
+        role: ''
     });
+
+    useEffect(() => {
+        setLoginInpput({...loginInput, role: accountType});
+    }, [setLoginInpput]);
 
     const handleChange = (e) => {
         setLoginInpput({...loginInput,
@@ -31,7 +35,7 @@ const Login = (props) => {
         <div>
             <Navbar />
             <div className="form-container">
-                <h1 className="heading-1 center-txt">Login as a { accountType }</h1>
+                <h1 className="heading-1 center-txt">Login as a { loginInput.role }</h1>
                 <form onSubmit={handleSubmit}>
                     <label className="bl txt-input-label" htmlFor="email">Email</label>
                     <input 
