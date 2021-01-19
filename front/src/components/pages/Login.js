@@ -15,8 +15,8 @@ const Login = () => {
     });
 
     useEffect(() => {
-        setLoginInpput({...loginInput, role: accountType});
-    }, [setLoginInpput]);
+        setLoginInpput(loginInput => ({...loginInput, role: accountType}));
+    }, [setLoginInpput, accountType]);
 
     const handleChange = (e) => {
         setLoginInpput({...loginInput,
