@@ -6,6 +6,7 @@ import ModalLogin from "./ModalLogin";
 
 const Navbar = () => {
   const isLogged = useSelector(state => state.login);
+  const user = useSelector(state => state.userData);
   const [loginModalIsShown, setLoginModalIsShown] = useState(false);
 
   const showModal = () => {
@@ -26,7 +27,9 @@ const Navbar = () => {
         {
           isLogged ?
             <li>
-              <button to="/signup" className="btn btn-sm btn--round btn-white" >Logout</button>
+              <button to="/signup" className="btn btn-sm btn--round btn-white" >
+                Welcome {user.firstname}!
+              </button>
             </li> :
             <>
             <li>

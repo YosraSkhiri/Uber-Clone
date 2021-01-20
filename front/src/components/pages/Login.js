@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import apiConsumer from '../../api';
 import Navbar from '../Navbar';
 import { useDispatch } from 'react-redux';
-import { isLoggedIn } from '../../redux/actions';
+import { isLoggedIn, setUserData } from '../../redux/actions';
 import Toast from '../Toast';
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
         try {
             const res = await apiConsumer.post('auth/login', loginInput);
             dispatch(isLoggedIn());
-            console.log(res.data.msg);
+            dispatch(setUserData(res.data));
         } catch(error) {
             setMessages(error.response.data.errors);
         }

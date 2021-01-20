@@ -9,3 +9,10 @@ export const isLoggedOut = () => {
     type: 'ISLOGGEDOUT'
   }
 }
+
+export const setUserData = userData => {
+  return {
+    type: 'SETUSERDATA',
+    payload: userData
+  }
+}
