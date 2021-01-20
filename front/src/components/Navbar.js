@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { isLoggedIn } from '../redux/actions';
 import ModalLogin from "./ModalLogin";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const isLogged = useSelector(state => state.login);
   const user = useSelector(state => state.userData);
   const [loginModalIsShown, setLoginModalIsShown] = useState(false);
+
+  useEffect(() => {
+    if(Cookies.get('isLogged') === 'true') {
+      dispatch(isLoggedIn());
+    }
+  });
 
   const showModal = () => {
     setLoginModalIsShown(true);

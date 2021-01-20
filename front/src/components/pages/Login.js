@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from "react-router-dom";
 import apiConsumer from '../../api';
@@ -18,6 +19,9 @@ const Login = () => {
     const [messages, setMessages] = useState();
 
     useEffect(() => {
+        if(Cookies.get('isLogged') === 'true') {
+            window.location.replace('/');
+        }
         setLoginInpput(loginInput => ({...loginInput, role: accountType}));
     }, [setLoginInpput, accountType]);
 
@@ -33,6 +37,7 @@ const Login = () => {
             const res = await apiConsumer.post('auth/login', loginInput);
             dispatch(isLoggedIn());
             dispatch(setUserData(res.data));
+            window.location.replace('/');
         } catch(error) {
             setMessages(error.response.data.errors);
         }
