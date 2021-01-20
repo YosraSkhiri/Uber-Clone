@@ -71,6 +71,7 @@ module.exports = {
                 const token = await jwt.sign({ userId }, config.get('jwtPrivateKey'));
                 return res.status(200)
                           .cookie('loginToken', token, { httpOnly: true, secure: true })
+                          .cookie('isLogged', 'true', { secure: true })
                           .json({ firstname: user.firstname });  
             }
 
