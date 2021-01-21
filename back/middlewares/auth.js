@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, config.get('jwtPrivateKey'));
-        req.user = verified.id;
+        req.user = verified.userId;
         next();
     } catch(error) {
         res.status(400).json({ errors: ['You\'re not logged in!'] });
