@@ -81,5 +81,11 @@ module.exports = {
         } catch(error) {
             return res.status(500).json({ errors: ['A server error has accured, Please try again later.']});
         }
+    },
+
+    logout: (req, res) => {
+        res.clearCookie('loginToken', {httpOnly: true});
+        res.clearCookie('isLogged');
+        return res.status(200).json({msg: ['Logged out successfully!']});
     }
 }
