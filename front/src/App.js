@@ -8,6 +8,7 @@ import Map from "./components/Map";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import Settings from "./components/pages/Settings";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route path="/login/:accountType" exact>
           { isLogged ? <Redirect to="/" /> : <Login /> }
+        </Route>
+        <Route path="/settings" exact>
+          <Settings />
         </Route>
       </Switch>
     </>

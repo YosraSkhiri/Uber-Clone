@@ -9,3 +9,16 @@ body {
 .center-txt {
     text-align: center;
 }
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-gap-lg {
+    gap: 82px;
+}
+
+.flex-item-1 {
+    flex: 1;
+}
