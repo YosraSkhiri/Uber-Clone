@@ -87,5 +87,35 @@ module.exports = {
         res.clearCookie('loginToken', {httpOnly: true});
         res.clearCookie('isLogged');
         return res.status(200).json({msg: ['Logged out successfully!']});
+    },
+
+    resetPassword: async (req, res) => {
+        const {
+            oldPassword,
+            newPassword
+        } = req.body;
+
+        if(newPassword.length < 8) {
+            return res.status(401).json({ errors: ['Your new password should be more then 7 characters.']})
+        }
+
+        try {
+            const userOldPassword = await User.findById(req.user).select('password -_id');
+            if(userOldPassword) {
+                const passwordCompareResult = await bcrypt.compare(oldPassword, userOldPassword.password);
+                if(passwordCompareResult){
+                    const hash = await bcrypt.hash(newPassword, 10);
+
+                    const newData = await User.updateOne({ _id: req.user }, {
+                        '$set': {'password': hash}
+                    });
+
+                    res.status(200).json({msg: ['Your password has been successfully updated!']});
+                }
+            }
+
+        } catch(error) {
+            return res.status(500).json({ errors: ['A server error has accured, Please try again later.']});
+        }
     }
 }
