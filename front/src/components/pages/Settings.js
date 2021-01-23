@@ -21,6 +21,9 @@ class Settings extends Component{
                 newPassword: ''
             }
         }
+        this.getUserData = this.getUserData.bind(this);
+        this.handleChangeForUpdate = this.handleChangeForUpdate.bind(this);
+        this.handleSubmitForUpdate = this.handleSubmitForUpdate.bind(this);
     }
 
     tunisianStates = ['Ariana', 'Beja', 'Ben Arous', 'Bizerte', 'Gabes', 
@@ -40,7 +43,23 @@ class Settings extends Component{
     }
 
     handleChangeForUpdate(e) {
-        this.setState({  });
+        const { name, value } = e.target;
+        this.setState({
+            updateForm: { 
+                ...this.state.updateForm,
+                [name]: value 
+            }
+        });
+    }
+
+    async handleSubmitForUpdate(e) {
+        e.preventDefault();
+        try {
+            await apiConsumer.post('user/update', this.state.updateForm);
+
+        } catch(error) {
+
+        }
     }
 
     componentDidMount() {
@@ -56,7 +75,7 @@ class Settings extends Component{
                     <div className="flex flex-gap-lg">
                         <div className="flex-item-1">
                             <h2 className="heading-2">Update your profile information</h2>
-                            <form>
+                            <form onSubmit={ this.handleSubmitForUpdate}>
                             <label className="bl txt-input-label" htmlFor="firstname">Firstname</label>
                                 <input 
                                     type="text"
@@ -106,13 +125,12 @@ class Settings extends Component{
                                     id="state" 
                                     name="state"
                                     className="txt-input"
+                                    value={this.state.updateForm.state}
                                     onChange={ this.handleChangeForUpdate }
                                 >
                                     {
                                         this.tunisianStates.map(state => (
-                                            this.state.updateForm.state === state ?
-                                            <option value={ state } key={ uuidv4() } checked >{ state }</option> :
-                                            <option value={ state } key={ uuidv4() }>{state}</option>
+                                            <option value={ state } key={ uuidv4() }>{ state }</option>
                                         ))
                                     }
                                 </select>
