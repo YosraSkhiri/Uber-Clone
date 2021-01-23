@@ -29,6 +29,7 @@ class Settings extends Component{
         this.handleSubmitForUpdate = this.handleSubmitForUpdate.bind(this);
         this.handleSubmitForReset = this.handleSubmitForReset.bind(this);
         this.handleChangeForResetPassword = this.handleChangeForResetPassword.bind(this);
+        this.handleSubmitForAccountDeletion = this.handleSubmitForAccountDeletion.bind(this);
     }
 
     tunisianStates = ['Ariana', 'Beja', 'Ben Arous', 'Bizerte', 'Gabes', 
@@ -70,7 +71,7 @@ class Settings extends Component{
     async handleSubmitForUpdate(e) {
         e.preventDefault();
         try {
-            const submittedUpdateForm = await apiConsumer.post('user/update', this.state.updateForm);
+            const submittedUpdateForm = await apiConsumer.put('user/update', this.state.updateForm);
             this.setState({ messages: submittedUpdateForm.data.msg});
         } catch(error) {
             this.setState({ messages: error.response.data.errors});
@@ -82,6 +83,17 @@ class Settings extends Component{
         try {
             const submittedResetForm = await apiConsumer.post('auth/reset-password', this.state.resetPassword);
             this.setState({ messages: submittedResetForm.data.msg});
+        } catch (error) {
+            this.setState({ messages: error.response.data.errors});
+        }
+    }
+
+    async handleSubmitForAccountDeletion(e) {
+        e.preventDefault();
+        try {
+            const deletedAccount = apiConsumer.delete('auth/delete-account');
+            this.setState({ messages: deletedAccount.data.msg});
+            window.location.href = '/';
         } catch (error) {
             this.setState({ messages: error.response.data.errors});
         }
@@ -193,7 +205,7 @@ class Settings extends Component{
                             </form>
 
                             <h2 className="heading-2 heading-2--mr-1">Delete Account</h2>
-                            <form>
+                            <form onSubmit={ this.handleSubmitForAccountDeletion }>
                                 <button type="submit" className="btn btn--rect-m btn-black btn--rect-full-width">Delete Account</button>
                             </form>
                             

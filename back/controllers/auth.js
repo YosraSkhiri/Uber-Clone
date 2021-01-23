@@ -117,5 +117,16 @@ module.exports = {
         } catch(error) {
             return res.status(500).json({ errors: ['A server error has accured, Please try again later.']});
         }
+    },
+
+    deleteAccount: async (req, res) => {
+        try {
+            User.deleteOne({ _id: req.user })
+            res.clearCookie('loginToken', {httpOnly: true});
+            res.clearCookie('isLogged');
+            return res.status(200).json({ msg: ['Your account has been successfully deleted!']});
+        } catch (error) {
+            return res.status(500).json({ errors: ['A server error has accured, Please try again later.']});
+        }
     }
 }
