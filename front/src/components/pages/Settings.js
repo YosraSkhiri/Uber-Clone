@@ -27,6 +27,8 @@ class Settings extends Component{
         this.getUserData = this.getUserData.bind(this);
         this.handleChangeForUpdate = this.handleChangeForUpdate.bind(this);
         this.handleSubmitForUpdate = this.handleSubmitForUpdate.bind(this);
+        this.handleSubmitForReset = this.handleSubmitForReset.bind(this);
+        this.handleChangeForResetPassword = this.handleChangeForResetPassword.bind(this);
     }
 
     tunisianStates = ['Ariana', 'Beja', 'Ben Arous', 'Bizerte', 'Gabes', 
@@ -55,12 +57,32 @@ class Settings extends Component{
         });
     }
 
+    handleChangeForResetPassword(e) {
+        const { name, value } = e.target;
+        this.setState({
+            resetPassword: { 
+                ...this.state.resetPassword,
+                [name]: value 
+            }
+        });
+    }
+
     async handleSubmitForUpdate(e) {
         e.preventDefault();
         try {
-            const submitedUpdateForm = await apiConsumer.post('user/update', this.state.updateForm);
-            this.setState({ messages: submitedUpdateForm.data.msg});
+            const submittedUpdateForm = await apiConsumer.post('user/update', this.state.updateForm);
+            this.setState({ messages: submittedUpdateForm.data.msg});
         } catch(error) {
+            this.setState({ messages: error.response.data.errors});
+        }
+    }
+
+    async handleSubmitForReset(e) {
+        e.preventDefault();
+        try {
+            const submittedResetForm = await apiConsumer.post('auth/reset-password', this.state.resetPassword);
+            this.setState({ messages: submittedResetForm.data.msg});
+        } catch (error) {
             this.setState({ messages: error.response.data.errors});
         }
     }
@@ -143,24 +165,28 @@ class Settings extends Component{
                         </div>
                         <div className="flex-item-1">
                             <h2 className="heading-2">Reset password</h2>
-                            <form>
+                            <form onSubmit={ this.handleSubmitForReset }>
 
-                                <label className="bl txt-input-label" htmlFor="password">Old Password</label>
+                                <label className="bl txt-input-label" htmlFor="oldPassword">Old Password</label>
                                 <input 
                                     type="password" 
-                                    placeholder="Password" 
-                                    id="password" 
-                                    name="password"
-                                    className="txt-input"                        
+                                    placeholder="Old Password" 
+                                    id="oldPassword" 
+                                    name="oldPassword"
+                                    className="txt-input"    
+                                    value={ this.state.resetPassword.oldPassword } 
+                                    onChange={ this.handleChangeForResetPassword }                   
                                 />
 
-                                <label className="bl txt-input-label" htmlFor="password">New Password</label>
+                                <label className="bl txt-input-label" htmlFor="newPassword">New Password</label>
                                 <input 
                                     type="password" 
-                                    placeholder="Password" 
-                                    id="password" 
-                                    name="password"
+                                    placeholder="New Password" 
+                                    id="newPassword" 
+                                    name="newPassword"
                                     className="txt-input"
+                                    value={ this.state.resetPassword.newPassword }
+                                    onChange={ this.handleChangeForResetPassword }  
                                 />
 
                                 <button type="submit" className="btn btn--rect-m btn-black btn--rect-full-width">Reset Password</button>
