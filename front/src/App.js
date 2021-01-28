@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { isLoggedIn } from './redux/actions';
 import './assets/style/sass/style.scss';
-import Map from "./components/Map";
+import Map from "./components/pages/Map";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
