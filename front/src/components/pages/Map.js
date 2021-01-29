@@ -8,8 +8,8 @@ import MarkerIcon from '../MarkerIcon';
 
 const Map = () => {
   const [userCoords, setUserCoords] = useState({
-    latitude: 36.8665,
-    longitude: 10.1647
+    latitude: null,
+    longitude: null
   });
     const socket = io('http://localhost:4000', {
         transports: ['websocket']
@@ -17,8 +17,8 @@ const Map = () => {
     const [viewport, setViewport] = useState({
         width: "100%",
         height: "calc(100vh - 65px)",
-        latitude: 36.8665,
-        longitude: 10.1647,
+        latitude: null,
+        longitude: null,
         zoom: 13
     });
 
@@ -34,31 +34,55 @@ const Map = () => {
         setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.10.1/mapbox-gl-rtl-text.js');
     }
 
-    useEffect(() => {
+    const getUserCurrentLocation = () => {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords.latitude, position.coords.longitude);
+        setViewport({
+          ...viewport,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
         setUserCoords({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         })
+
       });
+    }
+
+    useEffect(() => {
+      getUserCurrentLocation();
     }, []);
 
   return (
     <>
       <Navbar />
-      <ReactMapGL
-          mapboxApiAccessToken="pk.eyJ1IjoibWVoZGk3NyIsImEiOiJja2R4bWtpYmIzM3N1MnRwYWUxZjlldnNxIn0.0wiRF9B_wuv8hzM5uvAqow"
-          mapStyle= 'mapbox://styles/mapbox/streets-v11'
-          {...viewport}
-          onViewportChange={nextViewport => setViewport(nextViewport)}
-      >
-          <Marker latitude={ userCoords.latitude } longitude= { userCoords.longitude }> 
-              <button>
-                  <MarkerIcon fill="red" />
-              </button>
-          </Marker>
-      </ReactMapGL>
+      {
+        viewport.latitude && viewport.longitude ?
+          <ReactMapGL
+              mapboxApiAccessToken="pk.eyJ1IjoibWVoZGk3NyIsImEiOiJja2R4bWtpYmIzM3N1MnRwYWUxZjlldnNxIn0.0wiRF9B_wuv8hzM5uvAqow"
+              mapStyle= 'mapbox://styles/mapbox/streets-v11'
+              {...viewport}
+              onViewportChange={nextViewport => setViewport(nextViewport)}
+          >
+            {
+              userCoords.latitude && userCoords.longitude ?
+
+              <Marker latitude={ userCoords.latitude } longitude= { userCoords.longitude }> 
+                  <button>
+                      <MarkerIcon fill="red" />
+                  </button>
+              </Marker> 
+
+              : null
+            }
+          </ReactMapGL> 
+          
+          : 
+          
+          <h1 className="">
+            Please allow our App to access your location in order to see the map!
+          </h1>
+      }
     </>
   );
 };
