@@ -13,7 +13,6 @@ import Settings from "./components/pages/Settings";
 function App() {
   const dispatch = useDispatch();
   let isLogged = useSelector(state => state.login);
-  console.log(isLogged)
   useEffect(() => {
     if(Cookies.get('isLogged') === 'true') {
       dispatch(isLoggedIn());
@@ -27,7 +26,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/map" exact>
-          <Map />
+          { !isLogged ? <Redirect to="/" /> : <Map /> }
         </Route>
         <Route path="/signup" exact>
           { isLogged ? <Redirect to="/" /> : <Signup /> }
@@ -36,7 +35,7 @@ function App() {
           { isLogged ? <Redirect to="/" /> : <Login /> }
         </Route>
         <Route path="/settings" exact>
-          <Settings />
+          { !isLogged ? <Redirect to="/" /> : <Settings /> }
         </Route>
       </Switch>
     </>

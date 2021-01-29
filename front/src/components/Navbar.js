@@ -20,12 +20,8 @@ const Navbar = () => {
     }
   });
 
-  const showModal = () => {
-    setLoginModalIsShown(true);
-  }
-
-  const hideModal = () => {
-    setLoginModalIsShown(false);
+  const toggleModal = () => {
+    setLoginModalIsShown(!loginModalIsShown);
   }
 
   const logout = async () => {
@@ -89,7 +85,7 @@ const Navbar = () => {
             <li>
               <button 
                 className="btn btn--icon btn-sm btn--round btn-black"
-                onClick={ showModal }
+                onClick={ toggleModal }
               >
               <span className="icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -106,7 +102,7 @@ const Navbar = () => {
         }
       </ul>
     </nav>
-    <ModalLogin loginModalIsShown={ loginModalIsShown } hideModal={ hideModal }/>
+    <ModalLogin loginModalIsShown={ loginModalIsShown } toggleModal={ toggleModal }/>
     </>
   );
 };

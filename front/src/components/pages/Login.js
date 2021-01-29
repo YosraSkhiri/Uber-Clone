@@ -43,34 +43,38 @@ const Login = () => {
     return (
         <div>
             <Navbar />
-            <div className="form-container">
-                <h1 className="heading-1 center-txt">Login as a { loginInput.role }</h1>
-                <form onSubmit={handleSubmit}>
-                    <label className="bl txt-input-label" htmlFor="email">Email</label>
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        id="email" 
-                        name="email"
-                        onChange={handleChange}
-                        value={loginInput.email}
-                        className="txt-input"
-                    />
+            {
+                accountType === 'rider' || accountType === 'driver' ?
+            
+                <div className="form-container">
+                    <h1 className="heading-1 center-txt">Login as a { loginInput.role }</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label className="bl txt-input-label" htmlFor="email">Email</label>
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            id="email" 
+                            name="email"
+                            onChange={handleChange}
+                            value={loginInput.email}
+                            className="txt-input"
+                        />
 
-                    <label className="bl txt-input-label" htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        id="password" 
-                        name="password"
-                        onChange={handleChange}
-                        value={loginInput.password}
-                        className="txt-input"
-                    />
+                        <label className="bl txt-input-label" htmlFor="password">Password</label>
+                        <input 
+                            type="password" 
+                            placeholder="Password" 
+                            id="password" 
+                            name="password"
+                            onChange={handleChange}
+                            value={loginInput.password}
+                            className="txt-input"
+                        />
 
-                    <button type="submit" className="btn btn--rect-m btn-black btn--rect-full-width">login</button>
-                </form>
-            </div>
+                        <button type="submit" className="btn btn--rect-m btn-black btn--rect-full-width">login</button>
+                    </form>
+                </div> : null
+            }
             {
                 messages ?
                 <div className="toast-wrapper">
